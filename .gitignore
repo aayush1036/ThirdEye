@@ -1,0 +1,17 @@
+# Environment files
+env/
+
+# Pycache 
+__pycache__/
+
+# Data (will be genrated later)
+data/
+dataset/
+labels/
+data.yaml
+
+# Model 
+yolov5/
+
+# Testing files 
+test.py 
