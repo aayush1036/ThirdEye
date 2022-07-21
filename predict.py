@@ -1,7 +1,7 @@
 # Importing dependencies 
 import os
 import torch 
-import cv2 
+import cv2
 import numpy as np 
 import argparse
 
@@ -29,11 +29,11 @@ else:
 
 # Loading the custom model using torch hub
 
-# model = torch.hub.load('ultralytics/yolov5', 'custom', 
-#                        path=os.path.join(runs_path, latest_run, 'weights', 'best.pt'), 
-#                        force_reload=True)
+model = torch.hub.load('ultralytics/yolov5', 'custom', 
+                       path=os.path.join(runs_path, latest_run, 'weights', 'best.pt'), 
+                       force_reload=True)
 
-model = torch.hub.load('ultralytics/yolov5', 'custom', path=yolo_base_weights_path, force_reload=True)
+# model = torch.hub.load('ultralytics/yolov5', 'custom', path=yolo_base_weights_path, force_reload=True)
 
 # Performing real time detection using opencv 
 cap = cv2.VideoCapture(device)
