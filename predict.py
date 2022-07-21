@@ -19,26 +19,29 @@ device = int(args.device)
 version = int(args.version)
 frame_rate = int(args.frame_rate)
 
-yolo_base_weights_path = os.path.join('yolov5','yolov5s.pt')
-# Configuring the path where trained model is stored 
-runs_path = os.path.join('yolov5', 'runs', 'train')
-
-runs = os.listdir(runs_path)
-# Finding out the latest version
-if version == -1:
-    latest_run = runs[version]
 if version == 0:
     latest_run = 'best.pt'
+
 else:
-    # if version is specified, using that model
-    latest_run = runs[version-1]
+    yolo_base_weights_path = os.path.join('yolov5','yolov5s.pt')
+    # Configuring the path where trained model is stored 
+    runs_path = os.path.join('yolov5', 'runs', 'train')
+
+    runs = os.listdir(runs_path)
+    # Finding out the latest version
+    if version == -1:
+        latest_run = os.path.join(runs_path, runs[version], 'weights','best.pt')
+
+    else:
+        # if version is specified, using that model
+        latest_run = os.path.join(runs_path, runs[version-1], 'weights','best.pt')
 
 # Loading the custom model using torch hub
 
 # model = torch.hub.load('ultralytics/yolov5', 'custom', path=os.path.join('yolov5', 'yolov5s.pt'), force_reload=True)
 
 model = torch.hub.load('ultralytics/yolov5', 'custom', 
-                       path=os.path.join(runs_path, latest_run, 'weights', 'best.pt'), 
+                       path=latest_run, 
                        force_reload=True)
 engine = pyttsx3.init()
 # Performing real time detection using opencv 
