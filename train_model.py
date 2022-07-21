@@ -1,8 +1,34 @@
 # Importing dependencies 
 import os 
 import argparse
-# Fetching the path for yaml file which contains information about custom data labels
-yaml_path = '../data.yaml'
+from roboflow import Roboflow
+import json 
+import yaml 
+
+# Reading credential files 
+with open('config.json', 'r')  as f:
+    config = json.load(f)
+    
+api_key = config.get('api_key')
+workspace = config.get('workspace')
+project = config.get('project')
+version = config.get('version')
+
+# Downloading the data from RoboFlow 
+rf = Roboflow(api_key=api_key)
+project = rf.workspace(workspace).project(project)
+dataset = project.version(version).download("yolov5")
+
+yaml_path = os.path.join(dataset.location, 'data.yaml')
+
+with open(yaml_path, 'r') as f:
+    yaml_file = yaml.safe_load(f)
+    
+yaml_file['train'] = os.path.abspath(os.path.join(dataset.location, 'train'))
+yaml_file['val'] = os.path.abspath(os.path.join(dataset.location, 'valid'))
+
+with open(yaml_path, 'w') as f:
+    yaml.dump(dict(yaml_file), f)
 
 is_setup = os.path.exists('yolov5')
 if not is_setup:

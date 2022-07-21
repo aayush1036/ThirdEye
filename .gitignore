@@ -5,13 +5,13 @@ env/
 __pycache__/
 
 # Data (will be genrated later)
-data/
-dataset/
-labels/
-data.yaml
+ThirdEye-1/
 
 # Model 
 yolov5/
 
 # Testing files 
 test.py 
+
+# API keys 
+config.json
