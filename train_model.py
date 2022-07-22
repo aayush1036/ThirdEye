@@ -4,6 +4,7 @@ import argparse
 from roboflow import Roboflow
 import json 
 import yaml 
+import shutil
 
 # Reading credential files 
 with open('config.json', 'r')  as f:
@@ -54,3 +55,9 @@ weights = args.weights
 train_command = f'cd yolov5 && python train.py --img {img} --batch {batch} --epochs {epochs} --data {data} --weights {weights}'
 # Training the model 
 os.system(train_command)
+
+runs_path = os.path.join('yolov5', 'runs', 'train')
+latest_run = os.listdir(runs_path)[-1]
+latest_run_model = os.path.join(runs_path, latest_run, 'weights', 'best.pt')
+# Copy latest model to home directory
+shutil.copy2(src=latest_run_model, dst='best.pt')
