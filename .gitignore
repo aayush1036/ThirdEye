@@ -4,9 +4,10 @@ env/
 # Pycache 
 __pycache__/
 
-# Data (will be genrated later)
+# Data 
 ThirdEye-1/
-
+Captures/
+*.mp4
 # Model 
 yolov5/
 
